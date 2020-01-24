@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ReportesWeb.Models.Reportes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha_inicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha_fin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resumen)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha_inicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha_fin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resumen)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id_reporteID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id_reporteID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id_reporteID })
+        </td>
+    </tr>
+}
+
+</table>

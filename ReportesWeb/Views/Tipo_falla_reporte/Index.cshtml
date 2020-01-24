@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ReportesWeb.Models.Tipo_falla_reporte>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_reporte.Resumen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_tipo_falla.Nombre_falla)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_reporte.Resumen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_tipo_falla.Nombre_falla)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id_tipo_reporteID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id_tipo_reporteID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id_tipo_reporteID })
+        </td>
+    </tr>
+}
+
+</table>

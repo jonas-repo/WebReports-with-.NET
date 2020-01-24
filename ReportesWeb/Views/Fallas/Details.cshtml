@@ -1,0 +1,74 @@
+﻿@model ReportesWeb.Models.Falla
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Falla</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_tipo_falla.Nombre_falla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_tipo_falla.Nombre_falla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Url_imagen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Url_imagen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_inicio_falla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_inicio_falla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_usuario)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_fallaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

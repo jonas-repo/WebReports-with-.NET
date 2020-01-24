@@ -1,0 +1,295 @@
+﻿@model IEnumerable<ReportesWeb.Models.Falla>
+
+@{
+    ViewBag.Title = "Busqueda";
+}
+
+<div id="main">
+    <!-- Title, Breadcrumb Start-->
+    <div class="breadcrumb-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                    <h2 class="title">Busqueda de fallas</h2>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                    <div class="breadcrumbs pull-right">
+                        <ul>
+                            <li>Estas Aquí:</li>
+                            <li><a href="@Url.Action("Index","Home")">Inicio</a></li>
+                            <li><a href="#">Busqueda de reportes</a></li>
+                            <li>Busqueda de reportes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Title, Breadcrumb End-->
+    <!-- Main Content start-->
+    <div class="content">
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3 class="title">Rango de direcciones</h3>
+                <p><strong>Selecciona el rango de direcciones que quieres buscar</strong></p>
+                <div id="maps" class="google-maps">
+                </div>
+                <!-- Left Section End -->
+                <div class="divider"></div>
+            </div>
+            @using (Html.BeginForm("Search", "MostrarFallas"))
+            {
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Tipo de falla</label>
+                        @Html.DropDownList("Id_tipo_fallaID", null, htmlAttributes: new { @class = "form-control search-input" })
+                    </div>
+                    <input type="text" hidden name="Nor_lat" id="Nor_lat" />
+                    <input type="text" hidden  name="Nor_long" id="Nor_long" />
+                    <input type="text" hidden name="Sur_lat" id="Sur_lat" />
+                    <input type="text" hidden name="Sur_long" id="Sur_long" />
+
+                    <div class="col-lg-3">
+                        <label>Desde esta fecha</label>
+                        <input type="date" class="form-control" name="fechaInicio" required />
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Hasta esta fecha</label>
+                        <input type="date" class="form-control" name="fechaFin" required />
+                    </div>
+                    <div class="col-lg-3">
+                        <br />
+                        <button type="submit" class="subscribe-btn btn"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="divider"></div>
+            }
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tipo de falla</th>
+                        <th>Domicilio</th>
+                        <th>Imagen</th>
+                        <th>Fecha</th>
+                        <th>Numero de reporte</th>
+                        <th>Descripción</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {                      
+                        if (item.Estado == "Solucionado")
+                        {
+                        <tr>
+                            <td style="background-color:rgba(200, 229, 188, 0.47)  !important">
+                                @Html.DisplayFor(modelItem => item.Id_tipo_falla.Nombre_falla)
+                            </td>
+                            <td style="background-color:rgba(200, 229, 188, 0.47)  !important">
+                                <a href="@Url.Action("Domicilio", "MostrarFallas", new { id_falla = Html.DisplayFor(modelItem => item.Id_fallaID) })" target="_blank">Mostrar domicilio</a>
+                            </td>
+                            <td style="background-color:rgba(200, 229, 188, 0.47)  !important">
+                                <a href="@Html.DisplayFor(modelItem => item.Url_imagen)" data-rel="prettyPhoto">
+                                    Abrir imagen
+                                </a>
+                            </td>
+                            <td style="background-color:rgba(200, 229, 188, 0.47)  !important">
+                                @Html.DisplayFor(modelItem => item.Fecha_inicio_falla)
+                            </td>
+                            <td style="background-color:rgba(200, 229, 188, 0.47)  !important">
+                                @Html.DisplayFor(modelItem => item.Numero_Seguimiento)
+                            </td>
+                            <td style="background-color:rgba(200, 229, 188, 0.47)  !important">
+                                <div class="accordionMod panel-group">
+                                    <div class="accordion-item">
+                                        <h4 class="accordion-toggle collapsed">Descripción de la falla</h4>
+                                        <section class="accordion-inner panel-body">
+                                            <p>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </p>
+                                        </section>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="background-color:rgba(200, 229, 188, 0.47)  !important">
+                                <a href="@Url.Action("Create", "Reportes", new { id_falla = Html.DisplayFor(modelItem => item.Id_fallaID) })" class="btn btn-color" target="_blank" >Generar un reporte</a>
+                            </td>
+                        </tr>
+                        }
+                        else if (item.Estado == "No revisado")
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id_tipo_falla.Nombre_falla)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Domicilio", "MostrarFallas", new { id_falla = Html.DisplayFor(modelItem => item.Id_fallaID) })" target="_blank">Mostrar domicilio</a>
+                            </td>
+                            <td>
+                                <a href="@Html.DisplayFor(modelItem => item.Url_imagen)" data-rel="prettyPhoto">
+                                    Abrir imagen
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fecha_inicio_falla)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Numero_Seguimiento)
+                            </td>
+                            <td>
+                                <div class="accordionMod panel-group">
+                                    <div class="accordion-item">
+                                        <h4 class="accordion-toggle collapsed">Descripción de la falla</h4>
+                                        <section class="accordion-inner panel-body">
+                                            <p>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </p>
+                                        </section>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Create", "Reportes", new { id_falla = Html.DisplayFor(modelItem => item.Id_fallaID) })" class="btn btn-color" target="_blank">Generar un reporte</a>
+                            </td>
+                        </tr>
+                        }
+                        else
+                        {
+                           <tr>
+                            <td style="background-color:#f8efc0 !important">
+                                @Html.DisplayFor(modelItem => item.Id_tipo_falla.Nombre_falla)
+                            </td>
+                            <td style="background-color:#f8efc0 !important">
+                                <a href="@Url.Action("Domicilio", "MostrarFallas", new { id_falla = Html.DisplayFor(modelItem => item.Id_fallaID) })" target="_blank">Mostrar domicilio</a>
+                            </td>
+                            <td style="background-color:#f8efc0 !important">
+                                <a href="@Html.DisplayFor(modelItem => item.Url_imagen)" data-rel="prettyPhoto">
+                                    Abrir imagen
+                                </a>
+                            </td>
+                            <td style="background-color:#f8efc0 !important">
+                                @Html.DisplayFor(modelItem => item.Fecha_inicio_falla)
+                            </td>
+                            <td style="background-color:#f8efc0 !important">
+                                @Html.DisplayFor(modelItem => item.Numero_Seguimiento)
+                            </td>
+                            <td style="background-color:#f8efc0 !important">
+                                <div class="accordionMod panel-group">
+                                    <div class="accordion-item">
+                                        <h4 class="accordion-toggle collapsed">Descripción de la falla</h4>
+                                        <section class="accordion-inner panel-body">
+                                            <p>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </p>
+                                        </section>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="background-color:#f8efc0 !important">
+                                <a href="@Url.Action("Create", "Reportes", new { id_falla = Html.DisplayFor(modelItem => item.Id_fallaID) })" class="btn btn-color" target="_blank" >Generar un reporte</a>
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+            <!-- contact box end End-->
+        </div>
+    </div>
+    <!-- Main Content end-->
+</div>
+
+
+
+@section scripts{
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/jquery.parallax.js"></script>
+    @*<script src="~/js/jquery.wait.js"></script>*@
+    <script src="~/js/modernizr-2.6.2.min.js"></script>
+    @*<script src="~/js/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>*@
+    <script src="~/js/jquery.nivo.slider.pack.js"></script>
+    <script src="~/js/jquery.prettyPhoto.js"></script>
+    <script src="~/js/superfish.js"></script>
+    <script src="~/js/tytabs.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jflickrfeed.js"></script>
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    @*<script src="~/js/jquery.gmap.min.js"></script>*@
+    <script src="~/js/spectrum.js"></script>
+    <script src="~/js/switcher.js"></script>
+    <script src="~/js/custom.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            document.getElementById("footer").style.marginTop = "21em";
+        });
+    </script>
+
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDb1lMnlASUsVRfkbQLH_h615d1nkq-hek&callback=initMap">
+    </script>
+    <script>
+      // This example adds a user-editable rectangle to the map.
+      // When the user changes the bounds of the rectangle,
+      // an info window pops up displaying the new bounds.
+
+      var rectangle;
+      var map;
+      var infoWindow;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('maps'), {
+          center: {lat: 19.4178914, lng: -102.0589678},
+          zoom: 15
+        });
+
+        var bounds = {
+          north: 19.4178914,
+          south: 19.418914,
+          east: -102.0589678,
+          west: -102.0598678
+        };
+
+        // Define the rectangle and set its editable property to true.
+        rectangle = new google.maps.Rectangle({
+          bounds: bounds,
+          editable: true,
+          draggable: true
+        });
+
+        rectangle.setMap(map);
+
+        // Add an event listener on the rectangle.
+        rectangle.addListener('bounds_changed', showNewRect);
+
+        // Define an info window on the map.
+        infoWindow = new google.maps.InfoWindow();
+      }
+      // Show the new coordinates for the rectangle in an info window.
+
+      /** @this {google.maps.Rectangle} */
+      function showNewRect(event) {
+        var ne = rectangle.getBounds().getNorthEast();
+        var sw = rectangle.getBounds().getSouthWest();
+
+        var contentString = '<b>Cambio de posición.</b><br>' +
+            'Esquina Noreste: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
+            'Esquina Suroeste: ' + sw.lat() + ', ' + sw.lng();
+
+        $("#Nor_lat").val(ne.lat);
+        $("#Nor_long").val(ne.lng);
+        $("#Sur_lat").val(sw.lat);
+        $("#Sur_long").val(sw.lng);
+        // Set the info window's content and position.
+        infoWindow.setContent(contentString);
+        infoWindow.setPosition(ne);
+
+        infoWindow.open(map);
+      }
+    </script>
+
+}

@@ -1,0 +1,34 @@
+﻿@model ReportesWeb.Models.Tipo_falla_reporte
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tipo_falla_reporte</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_reporte.Resumen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_reporte.Resumen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_tipo_falla.Nombre_falla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_tipo_falla.Nombre_falla)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_tipo_reporteID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

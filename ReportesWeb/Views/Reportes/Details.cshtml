@@ -1,0 +1,42 @@
+﻿@model ReportesWeb.Models.Reportes
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reportes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_fin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_fin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resumen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resumen)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_reporteID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

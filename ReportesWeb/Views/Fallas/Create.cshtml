@@ -1,0 +1,209 @@
+﻿@model ReportesWeb.Models.Falla
+
+@{
+    ViewBag.Title = "Reportar una falla";
+}
+
+
+@using (Html.BeginForm("Create", "Fallas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="main">
+        <!-- Title, Breadcrumb Start-->
+        <div class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                        <h2 class="title">Reportar Falla</h2>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                        <div class="breadcrumbs pull-right">
+                            <ul>
+                                <li>Estas aquí:</li>
+                                <li><a href="@Url.Action("Index","Home")">Inicio</a></li>
+                                <li><a href="#">Reportar Falla</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Title, Breadcrumb End-->
+        <!-- Main Content start-->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    @if (ViewBag.validacionError)
+                    {
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert-danger alert">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                Porfavor ingresa toda la información que se pide para poder guardar tu reporte
+                            </div>
+                        </div>
+                    }
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h3 class="title">Subir una imagen</h3>
+                        <p style="font-size:18px;">
+                            Elige de que categoria de falla se trata.
+                        </p>
+                        @Html.DropDownList("Id_tipo_fallaID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Id_tipo_fallaID, "", new { @class = "text-danger" })
+                        <br />
+                        <p style="font-size:18px;">
+                            Sube una foto donde muestres la falla.
+                        </p>
+                        <input type='file' onchange="readURL(this);" class="form-control" name="image" required accept="image/x-png,image/jpeg,image/jpg" />
+                        <div class="divider"></div>
+                        <a href="~/img/blog/blog-post4.jpg" data-rel="prettyPhoto" id="url">
+                            <span class="fullscreen"><i class="fa fa-search"></i></span>
+                            <img src="~/img/blog/blog-post4.jpg" id="image" alt="" />
+                        </a>
+                        <div class="divider"></div>
+                    </div>
+                    <br />
+
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p style="font-size:18px;">
+                            <h3 class="title">Selecciona la dirección de la falla</h3>
+                            Por favor selecciona en el mapa la ubicación de la falla que deseas reportar,
+                            en caso de no seleccionar ninguna ubicación tu ubicación actual será tomada como referencia.
+                        </p>
+
+                        <div id="maps" class="google-maps">
+                        </div>
+                        <!-- Left Section End -->
+                        <input type="text" name="lat" id="lat" hidden />
+                        <input type="text" name="long1" id="long" hidden />
+                    </div>
+                </div> <!-- row -->
+                <div class="divider"></div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h3 class="title">Por favor escribe una breve descripción</h3>
+                        <label>Mensaje:</label>
+                        <textarea class="form-control" id="text" name="text" rows="3" cols="40" required style="max-width:1180px; min-height:250px;"></textarea>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <button class="btn-normal btn-color submit  bottom-pad" type="submit" onclick="return confirm('Revise la información, una vez hecho el reporte no podrá modificarse');">Enviar</button>
+                @*<div class="success alert-success alert" style="display:none">Tu mensaje a sido enviado correctamente.</div>
+                    <div class="error alert-error alert" style="display:none">El E-mail debe ser valido y el mensaje debe ser mayor a 100 caracteres.</div>
+                    <div class="clearfix">*@
+            </div> <!-- Container End-->
+        </div> <!-- Main Content End-->
+    </div>
+}
+
+
+
+
+
+@section scripts{
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/jquery.parallax.js"></script>
+    @*<script src="~/js/jquery.wait.js"></script>*@
+    <script src="~/js/modernizr-2.6.2.min.js"></script>
+    <script src="~/js/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/js/jquery.nivo.slider.pack.js"></script>
+    <script src="~/js/jquery.prettyPhoto.js"></script>
+    <script src="~/js/superfish.js"></script>
+    <script src="~/js/tytabs.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jflickrfeed.js"></script>
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    @*<script src="~/js/jquery.gmap.min.js"></script>*@
+    <script src="~/js/spectrum.js"></script>
+    <script src="~/js/switcher.js"></script>
+    <script src="~/js/custom2.js"></script>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+
+                    $("#url")
+                        .attr('href', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDb1lMnlASUsVRfkbQLH_h615d1nkq-hek&callback=initMap">
+    </script>
+    <script>
+        function initMap() {
+            var myLatLng = { lat: 19.406531, lng: -102.043095 };
+
+            var map = new google.maps.Map(document.getElementById('maps'), {
+                zoom: 15,
+                center: myLatLng
+            });
+
+            var infoWindow = new google.maps.InfoWindow({ map: map });
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Tu ubicación');
+                    $("#lat").val(pos.lat);
+                    $("#long").val(pos.lng);
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+
+            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ?
+                    'Error al buscar tu ubicación: Porfavor elige la dirección de la falla que quieres reportar.' :
+                    'Error: Tu navegador no soporta la geolocalizacion.');
+            }
+
+            var marker;
+
+            function placeMarker(location) {
+                if (marker) {
+                    marker.setPosition(location);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: location,
+                        map: map
+                    });
+                }
+                $("#lat").val(location.lat);
+                $("#long").val(location.lng);
+            }
+            google.maps.event.addListener(map, 'click', function (event) {
+                placeMarker(event.latLng);
+            });
+        }
+    </script>
+
+
+
+}
+
+

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ReportesWeb.Models.Falla>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_tipo_falla.Nombre_falla)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Url_imagen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha_inicio_falla)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_usuario)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_tipo_falla.Nombre_falla)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Latitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Longitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Url_imagen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha_inicio_falla)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_usuario)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id_fallaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id_fallaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id_fallaID })
+        </td>
+    </tr>
+}
+
+</table>

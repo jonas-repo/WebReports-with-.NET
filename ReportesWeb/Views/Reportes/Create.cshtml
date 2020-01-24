@@ -1,0 +1,150 @@
+﻿@model ReportesWeb.Models.Reportes
+
+@{
+    ViewBag.Title = "Registrar un reporte";
+}
+
+
+<div id="main">
+    <!-- Title, Breadcrumb Start-->
+    <div class="breadcrumb-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                    <h2 class="title">Reporte de una falla registrada</h2>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                    <div class="breadcrumbs pull-right">
+                        <ul>
+                            <li>Estas Aquí:</li>
+                            <li><a href="@Url.Action("Index","Home")">Inicio</a></li>
+                            <li><a href="#">Reporte de una falla registrada</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tipo de falla</th>
+                        <th>Domicilio</th>
+                        <th>Imagen</th>
+                        <th>Fecha</th>
+                        <th>Numero de reporte</th>
+                        <th>Descripción</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @ViewBag.Nombre_falla.Nombre_falla
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Domicilio","MostrarFallas", new {id_falla = ViewBag.falla.Id_fallaID })" target="_blank">Mostrar domicilio</a>
+                        </td>
+                        <td>
+                            <a href="@ViewBag.falla.Url_imagen" data-rel="prettyPhoto">
+                                Abrir imagen
+                            </a>
+                        </td>
+                        <td>
+                            @ViewBag.falla.Fecha_inicio_falla
+                        </td>
+                        <td>
+                            @ViewBag.falla.Numero_Seguimiento
+                        </td>
+                        <td>
+                            <div class="accordionMod panel-group">
+                                <div class="accordion-item">
+                                    <h4 class="accordion-toggle collapsed">Descripción de la falla</h4>
+                                    <section class="accordion-inner panel-body">
+                                        <p>
+                                            @ViewBag.falla.Descripcion
+                                        </p>
+                                    </section>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @using (Html.BeginForm("Create", "Reportes"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-lg-5">
+                        <label>Actualizar estado de esta falla</label>
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <input type="text" class="form-control" value="@ViewBag.falla.Estado" required name="estado" id="estado">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Estado <span class="caret"></span></button>
+                                <ul class="dropdown-menu pull-right" id="estado_lista">
+                                    <li><a href="#">No revisado</a></li>
+                                    <li><a href="#">En proceso de solución</a></li>
+                                    <li><a href="#">Solucionado</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                    </div>
+                    <input type="text" hidden value="@ViewBag.falla.Id_fallaID" name="id_falla"/>
+                    <div class="col-lg-3">
+                        <label>Fecha de inicio</label>
+                        <input type="date" required class="form-control" name="fechaInicio" />
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Fecha de finalización</label>
+                        <input type="date" required class="form-control" name="fechaFin" />
+                    </div>
+                </div>
+                <div class="divider"></div>
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h3 class="title">Por favor escribe un breve resumen de lo que se realizará</h3>
+                        <textarea class="form-control" id="text" name="text" rows="3" cols="40" required style="max-width:1180px; min-height:250px;"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-color">Registrar</button>
+            }
+        </div>
+    </div>
+</div><!-- ID Main -->
+
+@section scripts{
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/jquery.parallax.js"></script>
+    @*<script src="~/js/jquery.wait.js"></script>*@
+    <script src="~/js/modernizr-2.6.2.min.js"></script>
+    @*<script src="~/js/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>*@
+    <script src="~/js/jquery.nivo.slider.pack.js"></script>
+    <script src="~/js/jquery.prettyPhoto.js"></script>
+    <script src="~/js/superfish.js"></script>
+    <script src="~/js/tytabs.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jflickrfeed.js"></script>
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    @*<script src="~/js/jquery.gmap.min.js"></script>*@
+    <script src="~/js/spectrum.js"></script>
+    <script src="~/js/switcher.js"></script>
+    <script src="~/js/custom.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            document.getElementById("footer").style.marginTop = "21em";
+        });
+    </script>
+
+    <script>
+        $('#estado_lista li').on('click', function () {
+            $('#estado').val($(this).text());
+        });
+    </script>
+}
